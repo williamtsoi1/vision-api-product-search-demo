@@ -1,0 +1,6 @@
+{
+    "project_id": "PROJECT_PREFIX",
+    "billing_account_id": "BILLING_ACCOUNT_ID",
+    "region": "GCP_REGION",
+    "app_engine_region": "APP_ENGINE_REGION"
+}

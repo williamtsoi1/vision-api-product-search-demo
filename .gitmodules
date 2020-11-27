@@ -1,0 +1,3 @@
+[submodule "google-product-search-simple-ui"]
+	path = google-product-search-simple-ui
+	url = https://github.com/zinjiggle/google-product-search-simple-ui.git

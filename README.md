@@ -25,6 +25,15 @@ Here is what you need in order to deploy this solution:
 
 TODO: More detailed instructions later. For now, Google is your friend.
 
+### Git clone this repository and set the `PROJECT_ROOT` environment variable
+
+Execute the following to clone a copy of this repository, and also to set an environment variable that will be used throughout the rest of these instructions
+```
+git clone https://github.com/williamtsoi1/vision-api-product-search-demo.git
+cd vision-api-product-search-demo
+export PROJECT_ROOT=$(pwd)
+```
+
 ### Log in to gcloud and firebase SDK
 
 Execute the following, and follow the interactive prompts to login:
@@ -57,7 +66,7 @@ _Note: there are two variables for `region` and `app_engine_region`, because som
 We will use Terraform to automate the deployment of the infrastructure. Simply execute the following:
 
 ```
-cd terraform
+cd $PROJECT_ROOT/terraform
 terraform init
 terraform plan
 ```
@@ -82,8 +91,8 @@ Now we will deploy the Firebase Function which will download the required produc
 Execute the following to set the project context of the Firebase SDK, so it knows which project to deploy the function into:
 
 ```
-cd ../firebase
-sed -E "s/ADD_YOUR_PROJECT_HERE/$(terraform output -raw -state=../terraform/terraform.tfstate project_id)/" .firebaserc.renameMe > .firebaserc
+cd $PROJECT_ROOT/firebase
+sed -E "s/ADD_YOUR_PROJECT_HERE/$(terraform output -raw -state=$PROJECT_ROOT/terraform/terraform.tfstate project_id)/" .firebaserc.renameMe > .firebaserc
 ```
 
 Your `.firebaserc` should now look like the following:
@@ -99,15 +108,15 @@ Your `.firebaserc` should now look like the following:
 Next, install node dependencies:
 
 ```
-cd functions
+cd $PROJECT_ROOT/firebase/functions
 npm install
 ```
 
 Now we're almost ready to deploy, but first we need to configure which Cloud Storage bucket the images should be downloaded into. This bucket was created by Terraform already.
 
 ```
-cd ..
-firebase functions:config:set imagebucket.name="$(terraform output -raw -state=../terraform/terraform.tfstate project_id)_images" 
+cd $PROJECT_ROOT/firebase
+firebase functions:config:set imagebucket.name="$(terraform output -raw -state=$PROJECT_ROOT/terraform/terraform.tfstate project_id)_images" 
 ```
 
 Now we can deploy the Firebase Function:
@@ -121,7 +130,7 @@ firebase deploy --only functions
 We will use the `firestore-migrator` command line tool to import the product data into a Firestore collection called `products`. We will need to compile and build the tool first:
 
 ```
-cd ../firestore-migrator
+cd $PROJECT_ROOT/firestore-migrator
 npm install
 npm run-script build
 sudo npm link
@@ -129,9 +138,9 @@ sudo npm link
 Now we can use the `fire-migrate` CLI to import all the records into Firestore, which will then kick off the Firebase Function to download the images into GCS. Note that the import process will take a few minutes, which is normal.
 
 ```
-fire-migrate import ../data/products_0.csv products
-fire-migrate import ../data/products_1.csv products
-fire-migrate import ../data/products_2.csv products
+fire-migrate import $PROJECT_ROOT/data/products_0.csv products
+fire-migrate import $PROJECT_ROOT/data/products_1.csv products
+fire-migrate import $PROJECT_ROOT/data/products_2.csv products
 ```
 
 ### Deploy Test Harness application
@@ -139,8 +148,8 @@ fire-migrate import ../data/products_2.csv products
 Let's deploy our test harness application
 
 ```
-cd ../google-product-search-simple-ui
-gcloud app deploy --project "$(terraform output -raw -state=../terraform/terraform.tfstate project_id)"
+cd $PROJECT_ROOT/google-product-search-simple-ui
+gcloud app deploy --project "$(terraform output -raw -state=$PROJECT_ROOT/terraform/terraform.tfstate project_id)"
 ```
 
 When the app is successfully deployed, it should be accessible from `http://<PROJECT_ID>ae.uc.r.appspot.com`.
@@ -150,7 +159,7 @@ When the app is successfully deployed, it should be accessible from `http://<PRO
 We now need to do some processing on the products CSV files (because Vision API requires GCS URIs for the images). So run the following command to generate a new set of CSV files.
 
 ```
-cd ../data
+cd $PROJECT_ROOT/data
 sed -E "s/http:\/\//gs:\/\/$(terraform output -raw -state=../terraform/terraform.tfstate project_id)_images\//" products_0.csv > products_gcs_0.csv
 sed -E "s/http:\/\//gs:\/\/$(terraform output -raw -state=../terraform/terraform.tfstate project_id)_images\//" products_1.csv > products_gcs_1.csv
 sed -E "s/http:\/\//gs:\/\/$(terraform output -raw -state=../terraform/terraform.tfstate project_id)_images\//" products_2.csv > products_gcs_2.csv
@@ -168,7 +177,7 @@ gs://<image-bucket>/img.bbystatic.com/BestBuy_US/images/products/1276/127687_sa.
 Check that the generated CSV files look fine, and then upload them into the image bucket by running:
 
 ```
-gsutil cp products_gcs_* $(terraform output -raw -state=../terraform/terraform.tfstate vision_product_search_buckload_bucket_url)
+gsutil cp $PROJECT_ROOT/data/products_gcs_* $(terraform output -raw -state=$PROJECT_ROOT/terraform/terraform.tfstate vision_product_search_buckload_bucket_url)
 ```
 
 ### Index the Product Set using the Test Harness App

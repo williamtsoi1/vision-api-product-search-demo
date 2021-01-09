@@ -81,7 +81,7 @@ terraform apply -auto-approve
 As part of the deployed infrastructure, a service account and corresponding key has been generated. Execute the following to export the key for later use:
 
 ```
-terraform output -raw vision_product_search_service_account_key | base64 --decode > ../firestore-migrator/credentials.json
+terraform output -raw vision_product_search_service_account_key | base64 --decode > $PROJECT_ROOT/firestore-migrator/credentials.json
 ```
 
 ### Deploy Firebase Function for image download and processing

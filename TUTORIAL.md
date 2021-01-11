@@ -1,31 +1,6 @@
-# Google Cloud Platform Vision API Product Search Demo
+# Instructions
 
-## Introduction
-
-This repo shows an end-to-end example on how to use the [Vision API Product Search](https://cloud.google.com/vision/product-search/docs).
-
-This feature of Vision API is part of [Google Cloud for retail](https://cloud.google.com/solutions/retail). A retailer can upload their product catalog, which includes images of their products. Customers can then perform image searches on this catalog, and the solution will provide the user with a list of similar products with similarity scores.
-
-Watch [this video](https://www.youtube.com/watch?v=6PLaVc0rc6o&feature=emb_logo&autoplay=1) to see how IKEA uses this solution to enhance their customer experience, so that customers can use a mobile app to interactively construct their shopping list, simply by taking photos of products in the showroom!
-
-## Installation
-
-[![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https%3A%2F%2Fgithub.com%2Fwilliamtsoi1%2Fvision-api-product-search-demo&cloudshell_git_branch=main&shellonly=true&tutorial=TUTORIAL.md)
-
-## Prerequisites
-
-Here is what you need in order to deploy this solution:
-- An active Google Cloud Billing Account
-- Terraform (tested on version 0.14.4)
-- gcloud SDK (tested on version 319.0.0)
-- firebase SDK (tested on version 9.1.0)
-- nodejs (tested on version 12.16.2)
-- sed command-line tool
-- a UNIX bash-compatible shell
-
-## Instructions
-
-### Install Nodejs v12
+## Install Nodejs v12
 
 From cloud shell, execute the following to install nodejs v12:
 
@@ -40,7 +15,7 @@ Verify that this is installed correctly by executing:
 node -v
 ```
 
-### Install Terraform v0.14.3
+## Install Terraform v0.14.3
 
 From Cloud Shell, execute the following to install 0.14.4 of Terraform:
 
@@ -52,7 +27,7 @@ curl https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${T
 ```
 
 
-### Git clone this repository and set the `PROJECT_ROOT` environment variable
+## Git clone this repository and set the `PROJECT_ROOT` environment variable
 
 Execute the following to clone a copy of this repository, and also to set an environment variable that will be used throughout the rest of these instructions
 ```
@@ -61,7 +36,7 @@ cd vision-api-product-search-demo
 export PROJECT_ROOT=$(pwd)
 ```
 
-### Log in to gcloud and firebase SDK
+## Log in to gcloud and firebase SDK
 
 Execute the following, and follow the interactive prompts to login:
 ```
@@ -73,7 +48,7 @@ gcloud auth application-default login
 ```
 firebase login
 ```
-### Create a `variables.json` file in the repository root
+## Create a `variables.json` file in the repository root
 
 The file should be in this format, the fields to fill in are quite self-explanatory:
 
@@ -88,7 +63,7 @@ The file should be in this format, the fields to fill in are quite self-explanat
 
 _Note: there are two variables for `region` and `app_engine_region`, because sometimes they are not the same. You can get a list of GCP regions by running `gcloud compute regions list`, and you can get a list of App Engine regions by running `gcloud app regions list`._ 
 
-### Deploy the infrastructure 
+## Deploy the infrastructure 
 
 We will use Terraform to automate the deployment of the infrastructure. Simply execute the following:
 
@@ -103,15 +78,15 @@ Double check that the infrastructure to be deployed makes sense, and then execut
 terraform apply -auto-approve
 ```
 
-### Generate service account credentials for later use
+## Generate service account credentials for later use
 
 As part of the deployed infrastructure, a service account and corresponding key has been generated. Execute the following to export the key for later use:
 
 ```
-terraform output -raw vision_product_search_service_account_key | base64 --decode > $PROJECT_ROOT/firestore-migrator/credentials.json
+terraform output -raw vision_product_search_service_account_key | base64 --decode > ../firestore-migrator/credentials.json
 ```
 
-### Deploy Firebase Function for image download and processing
+## Deploy Firebase Function for image download and processing
 
 Now we will deploy the Firebase Function which will download the required product images for us.
 
@@ -152,7 +127,7 @@ Now we can deploy the Firebase Function:
 firebase deploy --only functions
 ```
 
-### Import CSV data into Firestore
+## Import CSV data into Firestore
 
 We will use the `firestore-migrator` command line tool to import the product data into a Firestore collection called `products`. We will need to compile and build the tool first:
 
@@ -170,7 +145,7 @@ fire-migrate import $PROJECT_ROOT/data/products_1.csv products
 fire-migrate import $PROJECT_ROOT/data/products_2.csv products
 ```
 
-### Deploy Test Harness application
+## Deploy Test Harness application
 
 Let's deploy our test harness application
 
@@ -181,7 +156,7 @@ gcloud app deploy --project "$(terraform output -raw -state=$PROJECT_ROOT/terraf
 
 When the app is successfully deployed, it should be accessible from `http://<PROJECT_ID>ae.uc.r.appspot.com`.
 
-### Process and upload the bulk upload CSV file
+## Process and upload the bulk upload CSV file
 
 We now need to do some processing on the products CSV files (because Vision API requires GCS URIs for the images). So run the following command to generate a new set of CSV files.
 
@@ -207,7 +182,7 @@ Check that the generated CSV files look fine, and then upload them into the imag
 gsutil cp $PROJECT_ROOT/data/products_gcs_* $(terraform output -raw -state=$PROJECT_ROOT/terraform/terraform.tfstate vision_product_search_buckload_bucket_url)
 ```
 
-### Index the Product Set using the Test Harness App
+## Index the Product Set using the Test Harness App
 
 - Browse to the Test Harness application (https://<project-id>ae.uc.r.appspot.com)
 - Click on the yellow "Upload service account json file" button, select the service account key which is in `firestore-migrator/credentials.json`

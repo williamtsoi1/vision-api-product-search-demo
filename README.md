@@ -10,7 +10,7 @@ Watch [this video](https://www.youtube.com/watch?v=6PLaVc0rc6o&feature=emb_logo&
 
 ## Installation
 
-[![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https%3A%2F%2Fgithub.com%2Fwilliamtsoi1%2Fvision-api-product-search-demo&cloudshell_git_branch=feature/docs-project-root&shellonly=true&tutorial=TUTORIAL.md)
+[![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https%3A%2F%2Fgithub.com%2Fwilliamtsoi1%2Fvision-api-product-search-demo&cloudshell_git_branch=feature/cloud-shell-tutorial&shellonly=true&tutorial=TUTORIAL.md)
 
 ## Prerequisites
 

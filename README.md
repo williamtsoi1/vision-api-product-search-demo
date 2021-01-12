@@ -1,5 +1,7 @@
 # Google Cloud Platform Vision API Product Search Demo
 
+[![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https%3A%2F%2Fgithub.com%2Fwilliamtsoi1%2Fvision-api-product-search-demo&cloudshell_git_branch=main&cloudshell_workspace=.&cloudshell_tutorial=TUTORIAL.md)
+
 ## Introduction
 
 This repo shows an end-to-end example on how to use the [Vision API Product Search](https://cloud.google.com/vision/product-search/docs).
@@ -34,6 +36,5 @@ This component is optional, but this is a nice to have for this demo so it becom
 
 ## Installation
 
-You will need an active Google Cloud Platform billing account and permissions to add projects to this billing account. Other than this all other prerequisites are satisfied through Cloud Shell. You can deploy this solution by clicking on the button below and following the instructions!
+You will need an active Google Cloud Platform billing account and permissions to add projects to this billing account. Other than this all other prerequisites are satisfied through Cloud Shell. You can deploy this solution by clicking on the "Open in Cloud Shell" button above and follow the instructions!
 
-[![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https%3A%2F%2Fgithub.com%2Fwilliamtsoi1%2Fvision-api-product-search-demo&cloudshell_git_branch=main&cloudshell_workspace=.&cloudshell_tutorial=TUTORIAL.md)

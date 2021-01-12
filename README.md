@@ -8,6 +8,11 @@ This feature of Vision API is part of [Google Cloud for retail](https://cloud.go
 
 Watch [this video](https://www.youtube.com/watch?v=6PLaVc0rc6o&feature=emb_logo&autoplay=1) to see how IKEA uses this solution to enhance their customer experience, so that customers can use a mobile app to interactively construct their shopping list, simply by taking photos of products in the showroom!
 
+## Architecture
+
+![Architecture](img/architecture.png)
+
+
 ## Installation
 
 [![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https%3A%2F%2Fgithub.com%2Fwilliamtsoi1%2Fvision-api-product-search-demo&cloudshell_git_branch=main&cloudshell_workspace=.&cloudshell_tutorial=TUTORIAL.md)

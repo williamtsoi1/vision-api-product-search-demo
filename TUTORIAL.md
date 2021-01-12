@@ -2,11 +2,7 @@
 
 ## Introduction
 
-This repo shows an end-to-end example on how to use the [Vision API Product Search](https://cloud.google.com/vision/product-search/docs).
-
-This feature of Vision API is part of [Google Cloud for retail](https://cloud.google.com/solutions/retail). A retailer can upload their product catalog, which includes images of their products. Customers can then perform image searches on this catalog, and the solution will provide the user with a list of similar products with similarity scores.
-
-Watch [this video](https://www.youtube.com/watch?v=6PLaVc0rc6o&feature=emb_logo&autoplay=1) to see how IKEA uses this solution to enhance their customer experience, so that customers can use a mobile app to interactively construct their shopping list, simply by taking photos of products in the showroom!
+This repo shows an end-to-end example on how to use the [Vision API Product Search](https://cloud.google.com/vision/product-search/docs). A high level overview of the solution is provided on the <walkthrough-editor-open-file filePath="README.md">README.md</walkthrough-editor-open-file> file.
 
 Follow the steps in this guide to deploy your own Vision API Product Search solution!
 
@@ -54,9 +50,8 @@ export PROJECT_ROOT=$(pwd)
 
 ## Create a `variables.json` file in the repository root
 
-Open the editor by clicking on the <walkthrough-cloud-shell-editor-icon></walkthrough-cloud-shell-editor-icon> icon.
+Open the <walkthrough-editor-open-file filePath="variables.json.renameMe">variables.json.renameMe</walkthrough-editor-open-file> file.
 
-Open the `variables.json.renameMe`
 The file should be in this format, the fields to fill in are quite self-explanatory:
 
 ```
@@ -144,7 +139,7 @@ We will use the `firestore-migrator` command line tool to import the product dat
 cd $PROJECT_ROOT/firestore-migrator
 npm install
 npm run-script build
-sudo npm link
+npm link
 ```
 
 Now we can use the `fire-migrate` CLI to import all the records into Firestore, which will then kick off the Firebase Function to download the images into GCS. Note that the import process will take a few minutes, which is normal.

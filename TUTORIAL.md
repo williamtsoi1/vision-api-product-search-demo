@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This repo shows an end-to-end example on how to use the [Vision API Product Search](https://cloud.google.com/vision/product-search/docs). A high level overview of the solution is provided on the <walkthrough-editor-open-file filePath="README.md">README.md</walkthrough-editor-open-file> file.
+This repo shows an end-to-end example on how to use the [Vision API Product Search](https://cloud.google.com/vision/product-search/docs). A high level overview of the solution is provided on the <walkthrough-editor-open-file filePath="./README.md">README.md</walkthrough-editor-open-file> file.
 
 Follow the steps in this guide to deploy your own Vision API Product Search solution!
 

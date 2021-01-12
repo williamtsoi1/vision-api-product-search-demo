@@ -150,13 +150,15 @@ fire-migrate import $PROJECT_ROOT/data/products_1.csv products
 fire-migrate import $PROJECT_ROOT/data/products_2.csv products
 ```
 
-## Deploy Test Harness application
+## Download and Deploy the Test Harness App
 
-Let's deploy our test harness application
+Run the following to download and deploy the Test Harness App:
 
 ```bash
+cd $PROJECT_ROOT
+git clone https://github.com/zinjiggle/google-product-search-simple-ui
 cd $PROJECT_ROOT/google-product-search-simple-ui
-gcloud app deploy --project "$(terraform output -raw -state=$PROJECT_ROOT/terraform/terraform.tfstate project_id)"
+gcloud app deploy -q --project "$(terraform output -raw -state=$PROJECT_ROOT/terraform/terraform.tfstate project_id)"
 ```
 
 When the app is successfully deployed, it should be accessible from:
@@ -191,11 +193,12 @@ Check that the generated CSV files look fine, and then upload them into the imag
 gsutil cp $PROJECT_ROOT/data/products_gcs_* $(terraform output -raw -state=$PROJECT_ROOT/terraform/terraform.tfstate vision_product_search_buckload_bucket_url)
 ```
 
-## Index the Product Set using the Test Harness App
 
+## Index the Product Set using the Test Harness App
+- Download your credentials by right-clicking on the `firestore-migrator/credentials.json` in the Editor, then click on "Download"
 - Browse to the Test Harness application (`https://<project-id>ae.uc.r.appspot.com`)
-- Click on the yellow "Upload service account json file" button, select the service account key which is in `firestore-migrator/credentials.json`
-- Choose the appropriate Location (this should be close to the region you've chosen earlier)
+- Click on the yellow "Upload service account json file" button, select the service account key that you just downloaded
+- Choose an appropriate location for the model (this should be close to the region you've chosen earlier)
 - In the "Index images from CSVs" section, click on the + arrow twice to ensure there are three lines available
 - For each of the lines, enter the GCS URI for the bulk upload CSV files and click on each "Import" button. The GCS URIs should be:
   ```
@@ -205,3 +208,24 @@ gsutil cp $PROJECT_ROOT/data/products_gcs_* $(terraform output -raw -state=$PROJ
   ```
 
 _Note: The indexing will take approximately 15-30 minutes for the operation to be "complete". It can also take potentially another 30-60 minutes for the machine learning model to train in the background._
+
+## Perform a Product Search using a test image
+
+- Browse to the Test Harness application (`https://<project-id>ae.uc.r.appspot.com`)
+- Click on the "Search" link on the top navigation
+- Click on the yellow "Upload service account json file" button, select the service account key that you just downloaded
+- Choose the same location as the previous step
+- In the "Provide product set id to search" textbox, input `products`
+- Click on the "Upload an image to search" button, and upload an image of your choice
+- For the "Category", select `general`
+- (Optional) Draw a bounding box around your image for better accuracy
+- Click on the `Search` button
+
+## Cleanup the infrastructure
+
+When you have finished exploring with this, execute the following to destroy the GCP project so that you won't be billed for usage anymore:
+
+```bash
+cd $PROJECT_ROOT/terraform
+terraform destroy -auto-approve
+```

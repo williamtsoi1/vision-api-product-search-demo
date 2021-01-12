@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This repo shows an end-to-end example on how to use the [Vision API Product Search](https://cloud.google.com/vision/product-search/docs). A high level overview of the solution is provided on the <walkthrough-editor-open-file filePath="./README.md">README.md</walkthrough-editor-open-file> file.
+This repo shows an end-to-end example on how to use the [Vision API Product Search](https://cloud.google.com/vision/product-search/docs). A high level overview of the solution is provided on the <walkthrough-editor-open-file filePath="vision-api-product-search-demo/README.md">README.md</walkthrough-editor-open-file> file.
 
 Follow the steps in this guide to deploy your own Vision API Product Search solution!
 
@@ -50,7 +50,7 @@ export PROJECT_ROOT=$(pwd)
 
 ## Create a `variables.json` file in the repository root
 
-Open the <walkthrough-editor-open-file filePath="variables.json.renameMe">variables.json.renameMe</walkthrough-editor-open-file> file.
+Open the <walkthrough-editor-open-file filePath="vision-api-product-search-demo/variables.json.renameMe">variables.json.renameMe</walkthrough-editor-open-file> file.
 
 The file should be in this format, the fields to fill in are quite self-explanatory:
 

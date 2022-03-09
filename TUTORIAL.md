@@ -202,9 +202,9 @@ gsutil cp $PROJECT_ROOT/data/products_gcs_* $(terraform output -raw -state=$PROJ
 - In the "Index images from CSVs" section, click on the + arrow twice to ensure there are three lines available
 - For each of the lines, enter the GCS URI for the bulk upload CSV files and click on each "Import" button. The GCS URIs should be:
   ```
-  gs://<project-id>_buckload/products_gcs_0.csv
-  gs://<project-id>_buckload/products_gcs_1.csv
-  gs://<project-id>_buckload/products_gcs_2.csv
+  gs://<project-id>_bulkload/products_gcs_0.csv
+  gs://<project-id>_bulkload/products_gcs_1.csv
+  gs://<project-id>_bulkload/products_gcs_2.csv
   ```
 
 _Note: The indexing will take approximately 15-30 minutes for the operation to be "complete". It can also take potentially another 30-60 minutes for the machine learning model to train in the background._

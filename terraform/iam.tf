@@ -13,6 +13,8 @@ resource "google_project_iam_binding" "project" {
 
   members = [
     "serviceAccount:${google_service_account.product_search.email}",
+    "serviceAccount:${google_project.my_project.number}@cloudservices.gserviceaccount.com",
+    "serviceAccount:${google_project.my_project.number}-compute@developer.gserviceaccount.com",
   ]
 }
 
